@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import React from "react";
+import React, { Suspense } from "react";
 import ResumeEditor from "./resume-editor";
 
 export const metadata: Metadata = {
@@ -7,7 +7,11 @@ export const metadata: Metadata = {
 };
 
 const EditorPage = () => {
-  return <ResumeEditor />;
+  return (
+    <Suspense>
+      <ResumeEditor />
+    </Suspense>
+  );
 };
 
 export default EditorPage;
