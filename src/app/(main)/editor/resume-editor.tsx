@@ -7,12 +7,24 @@ import Footer from "./footer";
 import { Suspense, useState } from "react";
 import { ResumeValues } from "@/lib/validation";
 import ResumePreviewSection from "./resume-preview-section";
-import { cn } from "@/lib/utils";
+import { cn, mapToResumeValues } from "@/lib/utils";
+import { useUnloadWarning } from "@/hooks/use-unload-warning";
+import { useAutosaveResume } from "./use-autosave";
+import { ResumeServerData } from "@/lib/types";
 
-const ResumeEditor = () => {
+type Props = {
+  resumeToEdit: ResumeServerData | null;
+};
+
+const ResumeEditor = ({ resumeToEdit }: Props) => {
   const searchParams = useSearchParams();
-  const [resumeData, setResumeData] = useState<ResumeValues>({});
+  const [resumeData, setResumeData] = useState<ResumeValues>(
+    resumeToEdit ? mapToResumeValues(resumeToEdit) : {},
+  );
   const [showSmResumePreview, setShowSmResumePreview] = useState(false);
+  const { isSaving, hasUnsavedChanges } = useAutosaveResume(resumeData);
+
+  useUnloadWarning(hasUnsavedChanges);
 
   const currentStep = searchParams.get("step") || steps[0].key;
 
@@ -63,6 +75,7 @@ const ResumeEditor = () => {
           </div>
         </main>
         <Footer
+          isSaving={isSaving}
           currentStep={currentStep}
           setCurrentStep={setStep}
           showSmResumePreview={showSmResumePreview}
