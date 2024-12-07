@@ -38,7 +38,7 @@ const PersonalInfoForm = ({ setResumeData, resumeData }: EditorFormProps) => {
     });
 
     return unsubscribe;
-  }, [form]);
+  }, [form, resumeData, setResumeData]);
 
   const photoInputRef = useRef<HTMLInputElement>(null);
 
