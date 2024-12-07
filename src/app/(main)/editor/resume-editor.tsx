@@ -6,7 +6,6 @@ import Breadcrumbs from "./breadcrumbs";
 import Footer from "./footer";
 import { useState } from "react";
 import { ResumeValues } from "@/lib/validation";
-import ResumePreview from "@/components/resume-preview";
 import ResumePreviewSection from "./resume-preview-section";
 import { cn } from "@/lib/utils";
 
