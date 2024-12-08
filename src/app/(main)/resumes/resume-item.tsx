@@ -23,6 +23,8 @@ import {
 } from "@/components/ui/dialog";
 import { DialogDescription, DialogTitle } from "@radix-ui/react-dialog";
 import { useReactToPrint } from "react-to-print";
+import LoadingButton from "@/components/loading-button";
+import { useToast } from "@/hooks/use-toast";
 
 type Props = {
   resume: ResumeServerData;
@@ -129,16 +131,20 @@ const DeleteConfirmationDialog = ({
   open,
   resumeId,
 }: DeleteConfirmationDialogProps) => {
-  //   const { toast } = useToast();
-  const [, startTransition] = useTransition();
+  const { toast } = useToast();
+  const [isPending, startTransition] = useTransition();
 
   async function handleDelete() {
     startTransition(async () => {
       try {
         await deleteResume(resumeId);
         onOpenChange(false);
-      } catch (error) {
-        console.error(error);
+      } catch (err) {
+        console.error(err);
+        toast({
+          variant: "destructive",
+          description: "Error: Unable to delete resume. Please try again.",
+        });
       }
     });
   }
@@ -154,9 +160,13 @@ const DeleteConfirmationDialog = ({
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
-          <Button variant="destructive" onClick={handleDelete}>
+          <LoadingButton
+            variant="destructive"
+            loading={isPending}
+            onClick={handleDelete}
+          >
             Delete
-          </Button>
+          </LoadingButton>
           <Button variant="secondary" onClick={() => onOpenChange(false)}>
             Cancel
           </Button>
