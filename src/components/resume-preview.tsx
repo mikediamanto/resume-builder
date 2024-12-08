@@ -9,9 +9,10 @@ import { BorderStyles } from "@/app/(main)/editor/border-style-button";
 type Props = {
   resumeData: ResumeValues;
   className?: string;
+  contentRef?: React.Ref<HTMLDivElement>;
 };
 
-const ResumePreview = ({ resumeData, className }: Props) => {
+const ResumePreview = ({ resumeData, className, contentRef }: Props) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const { width } = useDimensions(containerRef);
   return (
@@ -27,6 +28,8 @@ const ResumePreview = ({ resumeData, className }: Props) => {
         style={{
           zoom: (1 / 794) * width,
         }}
+        ref={contentRef}
+        id="resumePreviewContent"
       >
         <PersonalInfoHeader resumeData={resumeData} />
         <SummarySection resumeData={resumeData} />

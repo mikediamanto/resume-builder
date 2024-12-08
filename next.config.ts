@@ -13,15 +13,15 @@ const nextConfig: NextConfig = {
     ],
   },
   /* config options here */
-  redirects: async () => {
-    return [
-      {
-        source: "/",
-        destination: "/resumes",
-        statusCode: 307,
-      },
-    ];
-  },
+  // redirects: async () => {
+  //   return [
+  //     {
+  //       source: "/",
+  //       destination: "/resumes",
+  //       statusCode: 307,
+  //     },
+  //   ];
+  // },
 };
 
 export default nextConfig;
